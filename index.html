@@ -1,0 +1,109 @@
+<html>
+  <body>
+    <div style="font-size: 15">
+      To run this test:
+      <ol>
+        <li>Start the server by running `npm install && node app.js`.</li>
+        <li>First navigate to "localhost:4445" once to warm up your cache, and then run `localStorage.removeItem("exp_data")` so that run doesn't count.</li>
+        <li>Then, navigate to one of the links below by typing it in your location bar</li>
+        <li>To run a test multiple times, do "ctrl+l" then "enter" to navigate to the page without triggering a bunch of 304's, which skew the data</li>
+        <li>Make sure that devtools is closed, because that skews the stats on Firefox</li>
+      </ol>
+      
+      
+      The following are valid paths: <br>
+      <ul>
+        <li>/ (just the index, doesn't load a service worker)</li>
+        <li>/with_sw (loads a bare-bones service worker that doesn't respond to requests)</li>
+        <li>/with_dbxsw (loads the dropbox service worker, which has complex handling for whitelisted urls)</li>
+        <li>/with_faster_dbxsw (loads the dropbox service worker, updated so that it doesn't respond to non-navigate requests)</li>
+      </ul>
+    </div>
+    <div style="font-size: 30" id=msg></div>
+    <script>
+      window.RUN_IS_VALID = true;
+      // Conditionally load service worker.
+      var pathname = document.location.pathname;
+      if (pathname.startsWith('/with_')) {
+        var swPath;
+        if (pathname === '/with_sw') {
+          swPath = "/sw.js";
+        } else if (pathname === '/with_dbxsw') {
+          swPath = "/dbxsw.js";
+        } else if (pathname === '/with_faster_dbxsw') {
+          swPath = "/faster_dbxsw.js";
+        } else {
+          console.error("ERROR: could not pick sw path");
+          throw new Error("could not pick sw path");
+        }
+
+        if (!navigator.serviceWorker.controller ||
+            !navigator.serviceWorker.controller.scriptURL.endsWith(swPath)) {
+          navigator.serviceWorker.register(swPath);
+          var out = "NOTE: Please refresh the page so the service worker is active (won't display localStorage data)";
+          document.getElementById('msg').innerHTML = out;
+          RUN_IS_VALID = false;
+        }
+      } else {
+        if (navigator.serviceWorker.controller) {
+          navigator.serviceWorker.getRegistration().then(function(sw) { sw.unregister() });
+          var out = "NOTE: Please refresh the page so the service worker is disabled (won't display localStorage data)";
+          document.getElementById('msg').innerHTML = out;
+          RUN_IS_VALID = false;
+        }
+      }
+    </script>
+
+    <link href="static/font_paper_atlas_grotesk-vfliP02pL.css" rel="stylesheet">
+    <link href="static/maestro_layout-vflXwRrGZ.css" rel="stylesheet">
+    <link href="static/main-vflsvpEj6.css" rel="stylesheet">
+    <link href="static/web_sprites-vfl5RlO02.css" rel="stylesheet">
+    <link href="static/react_title_bar-vflM-fVjI.css" rel="stylesheet">
+    <link href="static/preview_quality_popup-vflyrlOUZ.css" rel="stylesheet">
+    <link href="static/video-js-5-custom-vflNxihj2.css" rel="stylesheet">
+    <link href="static/scooter-scoped-vflATcSDK.css" rel="stylesheet">
+    <link href="static/role_selector-vflZnCKUE.css" rel="stylesheet">
+    <link href="static/devtools-vfles2Zs7.css" rel="stylesheet">
+    <link href="static/preview_audio-vflognSBl.css" rel="stylesheet">
+    <link href="static/app_actions-vfl9FpZQi.css" rel="stylesheet">
+    <link href="static/preview_video-vfl28cjUi.css" rel="stylesheet">
+    <link href="static/react_file_viewer-vflUSPBFR.css" rel="stylesheet">
+    <link href="static/debug_panel-vflvu11qj.css" rel="stylesheet">
+    <link href="static/user_education-vflGFA4KE.css" rel="stylesheet">
+    <link href="static/comments-vflHOXLll.css" rel="stylesheet">
+    <link href="static/share_link_modal-vfl-EM39s.css" rel="stylesheet">
+    <link href="static/preview_flexbox_layout-vflVvYgB6.css" rel="stylesheet">
+    <link href="static/emails-vflHMrp0W.css" rel="stylesheet">
+    <link href="static/account_menu_common-vflylwKvy.css" rel="stylesheet">
+    <link href="static/modal-vfl0JUqZj.css" rel="stylesheet">
+    <link href="static/accessibility_audit_tool-vfl5u5Pvq.css" rel="stylesheet">
+    <link href="static/ha-vflVxVmTw.css" rel="stylesheet">
+    <link href="static/preview_toolbar-vfloZAcu4.css" rel="stylesheet">
+    <link href="static/comments_annotations-vfljyvcl4.css" rel="stylesheet">
+    <link href="static/preview_image-vflI9poDS.css" rel="stylesheet">
+    <link href="static/preview_archive-vflWdNToO.css" rel="stylesheet">
+    <link href="static/preview_pdf-vflnPCWgS.css" rel="stylesheet">
+    <link href="static/pagelet-vflWtjEG0.css" rel="stylesheet">
+    <link href="static/file_comments_pane-vflSx0Tsi.css" rel="stylesheet">
+    <link href="static/preview_linkfile-vflzpnXCF.css" rel="stylesheet">
+    <link href="static/accessibility-vflRPMGHg.css" rel="stylesheet">
+    <link href="static/components-vfl6Lks7U.css" rel="stylesheet">
+    <link href="static/preview_error-vflnDaGzH.css" rel="stylesheet">
+    <link href="static/preview_image_with_annotations-vflnssLFD.css" rel="stylesheet">
+    <link href="static/perf_hub-vflLIy14c.css" rel="stylesheet">
+    <link href="static/bug_reporter-vfl-tXbE0.css" rel="stylesheet">
+    <link href="static/maestro-nav-vflTD5BBO.css" rel="stylesheet">
+    <link href="static/title_bubble-vflPlqg7n.css" rel="stylesheet">
+    <link href="static/panel-vflNzNuGL.css" rel="stylesheet">
+    <link href="static/browse-vflo2askA.css" rel="stylesheet">
+    <link href="static/bubble_dropdown_v2-vflhhYVBe.css" rel="stylesheet">
+    <link href="static/search_bar_react-vflnBiB0A.css" rel="stylesheet">
+    <link href="static/notifications-vflyVYQUK.css" rel="stylesheet">
+    <link href="static/secondary_sidebar-vflHMBo2w.css" rel="stylesheet">
+    <link href="static/header_bubble_or_link-vflchvBt1.css" rel="stylesheet">
+
+    <script src="static/jquery_security_patch_bundle-vflZOxviW.js"></script>
+    <div style="font-size: 15">results:<br><br><div id=output>loading...</div></div>
+    <script src="get_results.js"></script>
+  </body>
+</html>
