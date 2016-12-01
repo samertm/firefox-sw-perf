@@ -89,3 +89,31 @@ Loaded 1008 resources
 Average duration: 2.111999007936508
 jQuery duration: 2.3633333333333333
 ```
+
+It seems like you can evict the in-memory cache by switching between a
+route with the service worker and a route without it, or with a
+different service worker. These are the numbers when running that type
+of test in Chrome. Seems like the faster service worker doesn't make
+much of a difference on Chrome.
+
+```
+Key: /
+Loaded 384 resources
+Average duration: 21.886445312499998
+jQuery duration: 27.63937500000001
+
+Key: /with_sw
+Loaded 384 resources
+Average duration: 36.59115885416667
+jQuery duration: 39.52812500000001
+
+Key: /with_dbxsw
+Loaded 528 resources
+Average duration: 35.71986742424242
+jQuery duration: 39.19545454545455
+
+Key: /with_faster_dbxsw
+Loaded 528 resources
+Average duration: 34.516676136363635
+jQuery duration: 38.21454545454546
+```
