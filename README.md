@@ -27,6 +27,15 @@ These are my results from running the test on Firefox 50 and Chrome
 
 ## Firefox 50
 
+There are a couple things going on with Firefox:
+
+ * I don't think firefox has an in-memory caching mechanism, so every request pulls from disk (or maybe a very, very slow in-memory cache).
+ * Even when something is cached, Firefox is firing up the service worker, when Chrome skips it completely. (The served resources have large max-ages, so they should be cache hits w/o needing to hit the network at all).
+ * For /with_dbxsw, the logic to whitelist routes is a bit complex, and I think the high average duration is caused by lots of fetches needing to wait on the single-threaded service worker to return.
+
+For cache hits where the max-age is large enough that it doesn't need
+to hit the network, pinging the service worker is probably a bug.
+
 
 ```
 Key: /
@@ -53,11 +62,11 @@ jQuery duration: 80.17416114285714
 
 ## Chrome 54
 
-(Chrome behaves a bit differently: the first request for cached item
+Chrome behaves a bit differently: the first request for cached item
 will take longer, and then it will be as if every item is "warm" in
 memory, the avg duration is 0. Removing/changing the service worker
 seems to evict the "warm", in-memory cache. Need to dig into this a
-bit more.)
+bit more.
 
 ```
 Key: /
