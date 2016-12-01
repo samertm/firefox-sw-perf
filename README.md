@@ -35,6 +35,8 @@ There are a couple things going on with Firefox:
 
 For cache hits where the max-age is large enough that it doesn't need
 to hit the network, pinging the service worker is probably a bug.
+EDIT: Apparently this is expected behavior:
+https://github.com/w3c/ServiceWorker/issues/962#issuecomment-264279456
 
 
 ```
