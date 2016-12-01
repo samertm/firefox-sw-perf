@@ -1,10 +1,15 @@
 # Firefox SW Perf Repro
 
 To run this test:
+
 1. Start the server by running `npm install && node app.js`.
+
 2. Navigate to "localhost:4445" once to warm up your cache, and then run `localStorage.removeItem("exp_data")` so that run doesn't count.
+
 3. Then, navigate to one of the links below by typing it in your location bar
+
 4. To run a test multiple times, do "ctrl+l" then "enter" to navigate to the page without triggering a bunch of 304's, which skew the data
+
 5. Make sure that devtools is closed, because that skews the stats on Firefox
 
 The following are valid paths: 
